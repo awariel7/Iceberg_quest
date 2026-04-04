@@ -4,7 +4,6 @@
 // ============================================
 
 VAR clues = 0
-VAR schema_understood = false
 
 -> intro
 
@@ -321,7 +320,6 @@ Iceberg не трогает старые файлы - просто знает ч
 
 Но тогда почему запрос возвращает 0 строк?
 
-~ schema_understood = true
 ~ clues = clues + 1
 
 + [Запустить исходный запрос ещё раз]
@@ -389,9 +387,9 @@ Iceberg не трогает старые файлы - просто знает ч
 === final_report ===
 
 { 
-- clues >= 3 && schema_understood:
+- clues == 3:
     -> ending_a
-- clues >= 2:
+- clues == 2:
     -> ending_b
 - else:
     -> ending_c
