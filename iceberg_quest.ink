@@ -256,13 +256,13 @@ Iceberg - это про то какие файлы составляют табл
 
 Сравниваешь схемы:
 
-~~~
+
 Вчера (snapshot 7734829104):
 orders: id, customer_id, amount, date
 
 Сегодня (snapshot 9823746512):
 orders: id, customer_id, amount, date, discount_pct
-~~~
+
 
 Кто-то добавил колонку discount_pct сегодня утром.
 
