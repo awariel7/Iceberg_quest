@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>Дело о пропавших данных</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="workspace-header">
+            <div class="workspace-logo">DC</div>
+            <div class="workspace-info">
+                <div class="workspace-name">DataCo</div>
+                <div class="workspace-plan">Free workspace</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section-label">Каналы</div>
+        <nav class="channel-list">
+            <a class="channel-item active">
+                <span class="hash">#</span>
+                <span>data-engineering</span>
+                <span class="unread-dot"></span>
+            </a>
+            <a class="channel-item">
+                <span class="hash">#</span>
+                <span>general</span>
+            </a>
+            <a class="channel-item">
+                <span class="hash">#</span>
+                <span>analytics</span>
+            </a>
+            <a class="channel-item">
+                <span class="hash">#</span>
+                <span>random</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-section-label">Личные сообщения</div>
+        <div class="dm-list">
+            <div class="dm-item">
+                <div class="dm-avatar av-green">М</div>
+                <span class="dm-name">Марина</span>
+                <span class="online-dot"></span>
+            </div>
+            <div class="dm-item">
+                <div class="dm-avatar av-blue">А</div>
+                <span class="dm-name">Я</span>
+            </div>
+            <div class="dm-item muted">
+                <div class="dm-avatar av-grey">Б</div>
+                <span class="dm-name">Бот-пайплайн</span>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="author-credit">Наталья Крутых, 2026</div>
+            <a href="https://www.inklestudios.com/ink" target="_blank" class="ink-credit">written in ink</a>
+        </div>
+    </aside>
+
+    <div class="chat-panel">
+        <header class="chat-topbar">
+            <div class="topbar-left">
+                <span class="topbar-hash">#</span>
+                <span class="topbar-channel">data-engineering</span>
+                <span class="topbar-divider">|</span>
+                <span class="topbar-desc">Трубы, таблицы и Apache Iceberg</span>
+            </div>
+            <div id="controls" class="buttons">
+                <a id="rewind" title="Начать заново">↺ restart</a>
+                <a id="save" title="Сохранить прогресс">save</a>
+                <a id="reload" title="Загрузить прогресс">load</a>
+                <a id="theme-switch" title="Сменить тему">theme</a>
+            </div>
+        </header>
+
+        <div class="outerContainer">
+            <div id="story" class="container">
+                <div class="header">
+                    <div class="channel-intro">
+                        <div class="channel-intro-icon">🧊</div>
+                        <h1>Дело о пропавших данных</h1>
+                        <h2 class="byline"></h2>
+                        <p class="channel-intro-desc">Добро пожаловать в интерактивный квест, который поможет закрепить
+                            знания по Apache Iceberg.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="ink.js"></script>
+    <script src="iceberg_quest.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
