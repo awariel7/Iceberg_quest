@@ -328,6 +328,21 @@ body {
     text-overflow: ellipsis;
 }
 
+/* Game clock */
+
+.game-clock {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--primary-light);
+    transition: opacity 0.3s;
+}
+
 /* Controls */
 
 #controls.buttons {
@@ -382,7 +397,7 @@ body {
 /* ─── Story container ────────────────────────────────────────────────────── */
 
 .container {
-    max-width: 780px;
+    max-width: 936px;
     margin: 0 auto;
     padding: 0 24px 80px;
     background: transparent;

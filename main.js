@@ -51,7 +51,7 @@
 
         var paragraphIndex = 0;
         var delay = 0.0;
-        var codeBuffer = null; // null = not in fence; string = collecting lines
+        var codeBuffer = null; // null = not collecting; string = accumulating # code lines
 
         // Don't over-scroll past new content
         var previousBottomEdge = firstTime ? 0 : contentBottomEdgeY();
@@ -126,6 +126,14 @@
                     outerScrollContainer.style.backgroundImage = 'url('+splitTag.val+')';
                 }
 
+                // TIME: HH:MM
+                else if( splitTag && splitTag.property == "TIME" ) {
+                    var clockEl = document.getElementById("game-clock");
+                    var timeEl = document.getElementById("clock-time");
+                    timeEl.textContent = splitTag.val;
+                    clockEl.style.display = "";
+                }
+
                 // CLASS: className
                 else if( splitTag && splitTag.property == "CLASS" ) {
                     customClasses.push(splitTag.val);
@@ -147,32 +155,28 @@
                 }
             }
 		
-		// Check if paragraphText is empty
-		if (paragraphText.trim().length == 0) {
-                if (codeBuffer !== null) codeBuffer += '\n'; // preserve blank lines inside fences
-                continue;
-		}
-
-            // Handle ~~~ code fence markers
-            if (paragraphText.trim() === '~~~') {
-                if (codeBuffer === null) {
-                    codeBuffer = '';
-                } else {
-                    var codeElement = document.createElement('p');
-                    codeElement.classList.add('code-block');
-                    codeElement.innerHTML = codeBuffer;
-                    storyContainer.appendChild(codeElement);
-                    showAfter(delay, codeElement);
-                    delay += 200.0;
-                    codeBuffer = null;
-                }
+            // Lines tagged with # code — collect into buffer
+            var isCode = tags.indexOf('code') !== -1;
+            if (isCode) {
+                if (codeBuffer === null) codeBuffer = '';
+                if (codeBuffer.length > 0) codeBuffer += '\n';
+                codeBuffer += paragraphText.trimEnd();
                 continue;
             }
 
-            // If inside a code fence, collect this line into the buffer
+            // First non-code line after code lines — flush the buffer
             if (codeBuffer !== null) {
-                if (codeBuffer.length > 0) codeBuffer += '\n';
-                codeBuffer += paragraphText.trimEnd();
+                var codeElement = document.createElement('p');
+                codeElement.classList.add('code-block');
+                codeElement.innerHTML = codeBuffer;
+                storyContainer.appendChild(codeElement);
+                showAfter(delay, codeElement);
+                delay += 200.0;
+                codeBuffer = null;
+            }
+
+            // Skip empty lines
+            if (paragraphText.trim().length == 0) {
                 continue;
             }
 
@@ -197,13 +201,6 @@
                 // Message from Marina
                 paragraphElement.classList.add('message-incoming');
                 paragraphElement.innerHTML = trimmedText.replace(/^>\s*/, '');
-            } else if (
-                paragraphText.startsWith('  ') ||
-                /^SELECT /.test(trimmedText)
-            ) {
-                // Code / terminal output
-                paragraphElement.classList.add('code-block');
-                paragraphElement.innerHTML = paragraphText;
             } else {
                 paragraphElement.innerHTML = paragraphText;
             }
@@ -216,6 +213,17 @@
             // Fade in paragraph after a short delay
             showAfter(delay, paragraphElement);
             delay += 200.0;
+        }
+
+        // Flush any remaining code buffer after the loop
+        if (codeBuffer !== null) {
+            var codeElement = document.createElement('p');
+            codeElement.classList.add('code-block');
+            codeElement.innerHTML = codeBuffer;
+            storyContainer.appendChild(codeElement);
+            showAfter(delay, codeElement);
+            delay += 200.0;
+            codeBuffer = null;
         }
 
         // Create HTML choices from ink choices
@@ -304,6 +312,7 @@
         story.ResetState();
 
         setVisible(".header", true);
+        document.getElementById("game-clock").style.display = "none";
 
         // set save point to here
         savePoint = story.state.toJson();
